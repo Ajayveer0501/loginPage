@@ -5,6 +5,7 @@ function App() {
  const [userName, setUsername]=useState("")
  const [password, setPassword]=useState("")
  const[loginMessage, setLoginMessage]=useState("")
+ const [loginSuccess, setLoginSuccess]=useState("")
 
 
  function loginCheck(userName,password){
@@ -17,9 +18,12 @@ function App() {
  }
 
  const handleSubmit=(e)=>{
-  e.preventdefault();
+  e.preventDefault();
   const message= loginCheck(userName,password)
   setLoginMessage(message)
+  if(userName==="user" && password==="password"){
+    setLoginSuccess(true)
+  }
  }
 
 //  console.log("userName=",userName)
@@ -29,13 +33,14 @@ function App() {
     <div>
       <h1>LOGIN PAGE</h1>
       {loginMessage && <h2>{loginMessage}</h2>}
-      <form onSubmit={handleSubmit}>
+      {!loginSuccess && (<form onSubmit={handleSubmit}>
       <div>
-      Username <input placeholder='Enter User Name' value={userName} onChange={(e)=>setUsername(e.target.value)}/>
-      Password <input type='password' placeholder='Enter Password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
+      Username <input placeholder='Enter User Name' value={userName} onChange={(e)=>setUsername(e.target.value)} required/>
+      Password <input type='password' placeholder='Enter Password' value={password} onChange={(e)=>setPassword(e.target.value)}required/>
       </div>
       <button type='Submit'>Submit</button>
-      </form>
+      </form>)}
+      
     </div>
     
   );
